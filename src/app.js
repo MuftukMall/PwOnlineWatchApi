@@ -1,15 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const streamRoute = require("./Routes/StreamRoute");
-const cors = require("cors")
+const cors = require("cors");
+const batchRouter = require("./Routes/BatchRoute");
 
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 const PORT = process.env.PORT || 7854;
 
-app.use("/stream", streamRoute);
+app.use("/api/batches", batchRouter)
 
 const startServer = async () => {
     try {
