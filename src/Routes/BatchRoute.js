@@ -6,11 +6,11 @@ const batchRouter = Router();
 
 batchRouter.get("/", (req, res) => {
     try {
-        const { name, batchId, token, refreshToken, rendomId } = req.body;
+        // const { name, batchId, token, refreshToken, rendomId } = req.body;
 
-        console.log(req.body);
+        console.log("hi");
 
-
+        res.send("ji")
 
     } catch (error) {
         res.status(400).send({ sccuess: false, message: error.message })
