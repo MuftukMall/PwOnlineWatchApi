@@ -1,22 +1,39 @@
-const { Router } = require('express');
-const batchModel = require('../Models/BatchModel');
+const axios = require("axios");
+const express = require("express");
+const batchRouter = express.Router();
 
-const batchRouter = Router();
-
-
-batchRouter.get("/", (req, res) => {
+batchRouter.post("/", async (req, res) => {
     try {
-        // const { name, batchId, token, refreshToken, rendomId } = req.body;
+        const { Token, RefreshToken, userId, mobileNumber, rendomId } = req.body;
 
-        console.log("hi");
+        let allBatches = [];
+        let page = 1;
+        let hasMore = true;
 
-        res.send("ji")
+        while (hasMore) {
+            const response = await axios.get(
+                `https://api.penpencil.co/batch-service/v1/batches/purchased-batches?page=${page}&type=ALL`,
+                {
+                    headers: { Authorization: `Bearer ${Token}` },
+                }
+            );
+
+            const batches = response.data?.data || [];
+
+            if (batches.length === 0) {
+                hasMore = false;
+            } else {
+                allBatches = allBatches.concat(batches);
+                page += 1;
+            }
+        }
+
+
+        res.status(200).send({ success: true, total: allBatches.length });
 
     } catch (error) {
-        res.status(400).send({ sccuess: false, message: error.message })
+        res.status(400).send({ success: false, message: error.message });
     }
-})
-
-
+});
 
 module.exports = batchRouter;
