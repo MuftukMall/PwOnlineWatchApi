@@ -2,15 +2,20 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const accessSchema = new Schema({
-    token: { type: String },
-    refreshToken: { type: String },
-    rendomId: { type: String },
+    id: { type: String },
+    name: { type: String },
+    image: { type: String },
 });
 
 const batchSchema = new Schema({
-    name: { type: String },
-    batch: { type: String },
-    access: [accessSchema]
+    userId: { type: String },
+    userName: { type: String },
+    mobileNo: { type: String },
+    Token: { type: String },
+    Token: { type: String },
+    RefreshToken: { type: String },
+    rendomId: { type: String },
+    batches: [accessSchema]
 });
 
 const batchModel = mongoose.model("Batch", batchSchema);
